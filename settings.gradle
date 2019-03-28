@@ -1,0 +1,2 @@
+include ':handwritinglibs', ':mxbase', ':writenote', ':haierexams', ':systemapp', ':sntest', ':testPressure', ':opengldrawline', ':orisim3d', ':systemfunc', ':potochangetext',':UIReferenceImplementation'
+
