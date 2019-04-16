@@ -65,7 +65,7 @@ public class FileUtils {
     }
 
     //写数据
-    public void writeFile(String fileName, String writestr) throws IOException {
+    public boolean writeFile(String fileName, String writestr) throws IOException {
         createFiles(fileName);
         try {
             File file = new File(fileName);
@@ -76,8 +76,10 @@ public class FileUtils {
             fout.write(bytes);
 
             fout.close();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
     /**
@@ -96,7 +98,7 @@ public class FileUtils {
         if (oldfile.exists()) { //文件存在时
             File filefloder=null;
             if (floder!=null&&!floder.isEmpty()) {
-                 filefloder = new File(floder);
+                filefloder = new File(floder);
                 if (!filefloder.exists()) {
                     filefloder.mkdirs();
                 }
@@ -434,7 +436,7 @@ public class FileUtils {
         String path="";
         try {
 //             path= Environment.getDownloadCacheDirectory().getAbsolutePath()+"/update.zip";
-             path= StringUtils.getSDPath()+"update.zip";
+            path= StringUtils.getSDPath()+"update.zip";
         }catch (Exception e){
         }
         APPLog.e("getDownloadCacheDirectory",path);

@@ -102,6 +102,8 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
     @Bind(R.id.title)
     TextView title;
 
+    @Bind(R.id.change)
+    TextView change;
     @Bind(R.id.save_write)
     ImageButton save_write;
     @Bind(R.id.back_last)
@@ -224,6 +226,7 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
         rubber.setOnClickListener(penClick);
         onclick_main_layout.setClickOther(this);
         complete.setOnClickListener(this);
+        change.setOnClickListener(this);
         save_write.setOnClickListener(this);
         back_last.setOnClickListener(this);
         recover_next.setOnClickListener(this);
@@ -459,6 +462,13 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
             case R.id.complete://完成
                 if (!write_view.isDrawUp()) return;
                 backActivity();
+                break;
+            case R.id.change_to_text://文字转换
+                try {
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case R.id.save_write://保存当前手写
 
@@ -784,7 +794,6 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
         }
         WriteNoteBackAdapter backAdapter = new WriteNoteBackAdapter(this, BackPhotoUtils.getBackMinPhoto(), click_item);
         grigView.setAdapter(backAdapter);
-
         popupWindow = new PopupWindow(contentView,
                 MyApplication.ScreenWidth - 20, LinearLayout.LayoutParams.WRAP_CONTENT, true);
 

@@ -311,6 +311,28 @@ public abstract class BaseActivity extends FragmentActivity implements ActivityL
         //没有问题可以进行移动
         insureDialog(hitn,content,insure,quit,code,true,listener);
     }
+    /**
+     * 单个按钮事件
+     * @param hitn
+     * @param content
+     * @param insure
+     * @param code
+     * @param listener
+     */
+    public void insureDialog(String hitn,String content,String insure, final Object code, boolean canlable,final InsureOrQuitListener listener){
+        //没有问题可以进行移动
+        alertDialog= new AlertDialog(this).builder().setTitle(hitn).setCancelable(canlable).setMsg(content).
+                setNegativeButton(insure, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.hide();
+                        if (listener != null) {
+                            listener.isInsure(code,true);
+                        }
+                    }
+                });
+        alertDialog.show();
+    }
     public void insureDialog(String hitn,String content,String insure,String quit, final Object code,boolean iscan, final InsureOrQuitListener listener){
         //没有问题可以进行移动
         alertDialog= new AlertDialog(this).builder().setTitle(hitn).setCancelable(iscan).setMsg(content).
