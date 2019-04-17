@@ -207,7 +207,7 @@ public class PenControl implements View.OnTouchListener {
         this.drawStyle = drawStyle;
 //        haveDraw=false;
         if (!ischekPage)
-        surfaceDraw(5);
+            surfaceDraw(5);
     }
 
     public void setRefureshListener(WindowRefureshListener refureshListener) {
@@ -256,6 +256,7 @@ public class PenControl implements View.OnTouchListener {
         }
     }
 
+
     public PenControl(final SurfaceView surfaceView) {
         this.surfaceView = surfaceView;
         this.surfaceView.setOnTouchListener(this);
@@ -263,14 +264,30 @@ public class PenControl implements View.OnTouchListener {
     }
 
     /**
+     * 延时加载
+     */
+    public boolean isdelayInit=false;
+    /**
      * 初始化手写控件
      */
     public void init_handwrite() {
-        init_handwriteC();
-        if (pageData != null && haveDraw) {
-            haveDraw = false;
+        if (isdelayInit){
+            isdelayInit=false;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    init_handwrite();
+                }
+            },300);
         }
-        surfaceDraw(8);
+        else {
+            init_handwriteC();
+            if (pageData != null && haveDraw) {
+                haveDraw = false;
+            }
+            surfaceDraw(8);
+        }
+
     }
     private void init_handwriteC(){
         int viewPosition[] = {0, 0};
@@ -527,7 +544,7 @@ public class PenControl implements View.OnTouchListener {
                 setNewDraw=false;
             }
         };
-         new Thread(runable).start();
+        new Thread(runable).start();
     }
 
     public void setTagListenerBack(final String tag, boolean toMain){
@@ -674,7 +691,7 @@ public class PenControl implements View.OnTouchListener {
         return null;
     }
     public WritePageData getNoPageData() {
-            return thisPenUtils().getPageData();
+        return thisPenUtils().getPageData();
     }
 
     public void ondestory() {

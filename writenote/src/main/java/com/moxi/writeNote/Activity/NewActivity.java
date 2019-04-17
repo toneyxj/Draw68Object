@@ -47,6 +47,7 @@ import com.moxi.writeNote.adapter.WriteNoteBackAdapter;
 import com.moxi.writeNote.config.ActivityUtils;
 import com.moxi.writeNote.dialog.CustomPenActivity;
 import com.moxi.writeNote.dialog.PageSkipActivity;
+import com.moxi.writeNote.listener.ChangeToTextListener;
 import com.moxi.writeNote.listener.InsertLister;
 import com.moxi.writeNote.utils.BackPhotoUtils;
 import com.moxi.writeNote.utils.BrushSettingUtils;
@@ -102,8 +103,8 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
     @Bind(R.id.title)
     TextView title;
 
-    @Bind(R.id.change)
-    TextView change;
+    @Bind(R.id.change_to_text)
+    TextView change_to_text;
     @Bind(R.id.save_write)
     ImageButton save_write;
     @Bind(R.id.back_last)
@@ -226,7 +227,7 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
         rubber.setOnClickListener(penClick);
         onclick_main_layout.setClickOther(this);
         complete.setOnClickListener(this);
-        change.setOnClickListener(this);
+        change_to_text.setOnClickListener(this);
         save_write.setOnClickListener(this);
         back_last.setOnClickListener(this);
         recover_next.setOnClickListener(this);
@@ -1145,4 +1146,26 @@ public class NewActivity extends WriteBaseActivity implements View.OnClickListen
     public void onDrawDelete(boolean delete) {
 //        write_back.setshow(delete?View.VISIBLE:View.INVISIBLE);
     }
+
+    private ChangeToTextListener changeToTextListener=new ChangeToTextListener() {
+        @Override
+        public void onChangeFaile(String error) {
+            dialogShowOrHide(false, "");
+            if (error != null && !error.isEmpty())
+                ToastUtils.getInstance().showToastShort(error);
+        }
+
+        @Override
+        public void onChangeSucess(String value) {
+            dialogShowOrHide(false, "");
+            write_view.setCanDraw(false, 6);
+            write_view.isdelayInit(true);
+            EditeTextActivity.startEditeTextActivity(NewActivity.this,value);
+        }
+
+        @Override
+        public void onChangeStart() {
+            dialogShowOrHide(true, "");
+        }
+    };
 }
